@@ -61,7 +61,7 @@ export class GameService {
   ) {
     this.loadNews();
     this.loadPoints();
-    this.loadTHPoints(); // Treasure Hunt
+    // this.loadTHPoints(); // Treasure Hunt
   }
   async loadNews() {
       // TODO: Check connection
@@ -71,10 +71,10 @@ export class GameService {
 
     async loadPoints() {
         // TODO: Check connection
-        this.points = await this.pointService.getPoints();
+        this.points = await this.pointService.getPoints(5, 'neka_drzava');
         await this.storageService.setValue('points', this.pointService);
     }
-
+/*
     // Do not draw markers, but add fence on map for thPoints[0]
     async loadTHPoints() {
       // TODO: Enable more routes
@@ -87,7 +87,7 @@ export class GameService {
         // TODO: Check connection
         this.thPoints = await this.pointService.getTHPoints();
         await this.storageService.setValue('thPoints', this.pointService);
-    }
+    }*/
 
     getClosestPoints(lat, lon, radius) {
       const sorted = this.utilityService.sortPoints(lat, lon, radius, this.points);

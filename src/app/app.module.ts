@@ -17,6 +17,9 @@ import { UtilitiesService} from './services/utilities-service/utilities.service'
 import { IonicStorageModule } from '@ionic/storage';
 import { StorageService } from './services/storage-service/storage.service';
 import { PointService } from './services/point-service/point.service';
+import { LocationService } from './services/location-service/location.service';
+import {Geolocation} from '@ionic-native/geolocation/ngx';
+import {MapService} from './services/map-service/map.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,6 +36,9 @@ import { PointService } from './services/point-service/point.service';
     UtilitiesService,
     StorageService,
     PointService,
+    LocationService,
+    Geolocation,
+    MapService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

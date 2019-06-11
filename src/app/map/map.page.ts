@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Environment, GoogleMap, GoogleMapOptions, GoogleMaps, GoogleMapsEvent, Marker} from '@ionic-native/google-maps/ngx';
 import {AlertsService} from '../services/alert-service/alerts.service';
+import {Platform} from '@ionic/angular';
+import {LocationService} from '../services/location-service/location.service';
+import {MapService} from '../services/map-service/map.service';
 
 @Component({
   selector: 'app-map',
@@ -9,47 +12,67 @@ import {AlertsService} from '../services/alert-service/alerts.service';
 })
 export class MapPage implements OnInit {
     map: GoogleMap;
+    currentPos: Coordinates;
+    // currentPos: any;
   constructor(
-      private alertsService: AlertsService
+      private alertsService: AlertsService,
+      private platform: Platform,
+      private mapService: MapService,
+      private location: LocationService,
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
       // TODO: Check connection
-      this.loadMap();
+      await this.platform.ready();
+      await this.mapService.loadMap();
+      await this.location.pointLocation();
   }
-
-    loadMap() {
-        // This code is necessary for browser
-        Environment.setEnv({
-            API_KEY_FOR_BROWSER_RELEASE: 'AIzaSyAfw3u7ZmqYhC6EXOsPLizVoYy00T9wn6M',
-            API_KEY_FOR_BROWSER_DEBUG: 'AIzaSyAfw3u7ZmqYhC6EXOsPLizVoYy00T9wn6M',
-        });
-
-        const mapOptions: GoogleMapOptions = {
-            camera: {
-                target: {
-                    lat: 43.0741904,
-                    lng: -89.3809802
-                },
-                zoom: 18,
-                tilt: 30
-            }
-        };
-
-        this.map = GoogleMaps.create('map_canvas', mapOptions);
-
-        const marker: Marker = this.map.addMarkerSync({
-            title: 'Ionic',
-            icon: 'blue',
-            animation: 'DROP',
-            position: {
-                lat: 43.0741904,
-                lng: -89.3809802
-            }
-        });
-        marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
-
-        });
-    }
+    //
+    // async loadMap() {
+    //     // This code is necessary for browser
+    //     /*
+    //     Environment.setEnv({
+    //         API_KEY_FOR_BROWSER_RELEASE: 'AIzaSyAfw3u7ZmqYhC6EXOsPLizVoYy00T9wn6M',
+    //         API_KEY_FOR_BROWSER_DEBUG: 'AIzaSyAfw3u7ZmqYhC6EXOsPLizVoYy00T9wn6M',
+    //     });*/
+    //
+    //   Environment.setEnv({
+    //       API_KEY_FOR_BROWSER_RELEASE: 'AIzaSyAz1sU7SQbb-IUY6JlXr3xWDmrQobct5aM',
+    //       API_KEY_FOR_BROWSER_DEBUG: 'AIzaSyAz1sU7SQbb-IUY6JlXr3xWDmrQobct5aM',
+    //   });
+    //
+    //   console.log('Pre getposition');
+    //   this.currentPos = await this.location.getPositionCoords();
+    //
+    //   const mapOptions: GoogleMapOptions = {
+    //       camera: {
+    //           target: {
+    //               lat: this.currentPos.latitude,
+    //               lng: this.currentPos.longitude
+    //           },
+    //           zoom: 18,
+    //           tilt: 30
+    //       }
+    //   };
+    //
+    //   const mapCanvas = document.getElementById('map_canvas');
+    //   mapCanvas.style.height = window.innerHeight * 9 / 10 + 'px';
+    //   this.map = GoogleMaps.create(mapCanvas, mapOptions);
+    //
+    //   await this.map.one(GoogleMapsEvent.MAP_READY);
+    //
+    //   console.log('Map ready triggered');
+    //   const marker: Marker = this.map.addMarkerSync({
+    //       title: 'Initial location',
+    //       icon: 'blue',
+    //       animation: 'DROP',
+    //       position: {
+    //           lat: this.currentPos.latitude,
+    //           lng: this.currentPos.longitude
+    //       }
+    //   });
+    //   marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
+    //   });
+    // }
 
 }

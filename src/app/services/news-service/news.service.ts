@@ -8,14 +8,13 @@ import {UtilitiesService} from '../utilities-service/utilities.service';
   providedIn: 'root'
 })
 export class NewsService {
-
-    public res: any = {};
+  public res: any = {};
 
   constructor(
-      private apiService: ApiService,
-      private configService: ConfigService,
-      private alertsService: AlertsService,
-      private utilities: UtilitiesService) { }
+    private apiService: ApiService,
+    private configService: ConfigService,
+    private alertsService: AlertsService,
+    private utilities: UtilitiesService) { }
 
   async getNews(limit = 0) {
     const { BASE_URL } = this.configService.getParams();

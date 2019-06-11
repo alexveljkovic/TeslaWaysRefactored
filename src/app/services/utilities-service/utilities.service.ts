@@ -6,7 +6,6 @@ import { Injectable } from '@angular/core';
 export class UtilitiesService {
 
   constructor() {}
-
   toArray(obj) {
     if (Array.isArray(obj)) {
       return obj;

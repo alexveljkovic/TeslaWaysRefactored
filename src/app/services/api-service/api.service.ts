@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import axios from 'Axios';
+import axios from 'axios';
 import {AlertsService} from '../alert-service/alerts.service';
 
 const DEVELOPMENT = false;
