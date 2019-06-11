@@ -1,5 +1,7 @@
 {
   "name": "TeslaWaysApp",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
