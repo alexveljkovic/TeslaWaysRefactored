@@ -15,16 +15,14 @@ export class PointService {
       private alertsService: AlertsService,
   ) { }
 
-    async getPoints(limit = 0, country) {
-      const { BASE_URL } = this.configService.getParams();
+    async getPoints(limit = 0, country = 'SR') {
       try {
-          console.log(BASE_URL);
-          this.res = await this.apiService.GetData(`${BASE_URL}/comments`);
+          this.res = await this.apiService.GetData(`points/`);
 
           if (limit !== 0) {
-              return this.res.data.slice(0, limit);
+              return this.res.slice(0, limit);
           } else {
-              return this.res.data;
+              return this.res;
           }
 
       } catch (err) {

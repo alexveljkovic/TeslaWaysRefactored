@@ -18,7 +18,7 @@ import {UtilitiesService} from '../utilities-service/utilities.service';
 
 	NE
 	nista
-5. Izadje van lokacije -> ActiveLocation = null, ActiveQuestion se ne menja
+5. Izadje van lokacije -> ActiveLocation = null, ActiveQuestion se ne menjaiz
 
 
 6. Dodje do druge lokacije -> ActiveLocation = location
@@ -61,7 +61,7 @@ export class GameService {
   ) {
     this.loadNews();
     this.loadPoints();
-    this.loadTHPoints(); // Treasure Hunt
+    // this.loadTHPoints(); // Treasure Hunt
   }
   async loadNews() {
       // TODO: Check connection
@@ -72,6 +72,7 @@ export class GameService {
     async loadPoints() {
         // TODO: Check connection
         this.points = await this.pointService.getPoints();
+        console.log(this.points);
         await this.storageService.setValue('points', this.pointService);
     }
 

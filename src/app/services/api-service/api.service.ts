@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import axios from 'Axios';
 import {AlertsService} from '../alert-service/alerts.service';
+import * as firebase from 'firebase';
 
 const DEVELOPMENT = false;
 
@@ -12,19 +12,16 @@ export class ApiService {
   constructor(alertsService: AlertsService) { }
 
   // GET API call call to URL
-    GetData(url, params = {}) {
-      if (DEVELOPMENT) {
-          return new Promise((resolve, reject) => {
-              resolve({data: 'data', message: 'Success'});
+    GetData(path) {
+      const ref = firebase.database().ref(path);
+
+      // TODO: Check connection
+      console.log('GET:', path);
+      return new Promise((resolve, reject) => {
+          ref.on('value', resp => {
+              resolve(resp.val());
           });
-      } else {
-          // TODO: Check connection
-          console.log('GET:', url);
-          return axios.get(url, {
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-          });
-      }
+      });
+
   }
 }

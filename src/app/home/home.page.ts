@@ -3,17 +3,6 @@ import {NavController} from '@ionic/angular';
 import {ApiService} from '../services/api-service/api.service';
 import {AlertsService} from '../services/alert-service/alerts.service';
 import {NewsService} from '../services/news-service/news.service';
-
-import {
-    GoogleMaps,
-    GoogleMap,
-    GoogleMapsEvent,
-    GoogleMapOptions,
-    CameraPosition,
-    MarkerOptions,
-    Marker,
-    Environment
-} from '@ionic-native/google-maps/ngx';
 import {GameService} from '../services/game-service/game.service';
 
 @Component({
@@ -22,7 +11,6 @@ import {GameService} from '../services/game-service/game.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-    map: GoogleMap;
 
   constructor(
       private navCtrl: NavController,
@@ -30,9 +18,7 @@ export class HomePage {
       private apiService: ApiService,
       private newsService: NewsService,
       private gameService: GameService,
-  ) {
-      console.log(navigator);
-  }
+  ) {}
 
   async gotoMap() {
     // this.navCtrl.navigateForward('map');
