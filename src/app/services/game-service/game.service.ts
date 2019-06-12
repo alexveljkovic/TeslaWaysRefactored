@@ -1,4 +1,4 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {NewsService} from '../news-service/news.service';
 import {StorageService} from '../storage-service/storage.service';
 import {PointService} from '../point-service/point.service';
@@ -36,6 +36,7 @@ class Question {
     public questionText: string;
     public possibleAnswers: any = [];
     public correctAnswer: string;
+
     constructor(questionText, possibleAnswers, correctAnswer) {
         this.questionText = questionText;
         this.possibleAnswers = possibleAnswers;
@@ -53,16 +54,17 @@ export class GameService {
     public activeQuestion: any = null;
 
     constructor(
-      private newsService: NewsService,
-      private storageService: StorageService,
-      private pointService: PointService,
-      private alertsService: AlertsService,
-      private utilityService: UtilitiesService,
+        private newsService: NewsService,
+        private storageService: StorageService,
+        private pointService: PointService,
+        private alertsService: AlertsService,
+        private utilityService: UtilitiesService,
     ) {
         this.loadNews();
         this.loadPoints();
         // this.loadTHPoints(); // Treasure Hunt
     }
+
     async loadNews() {
         // TODO: Check connection
         this.news = await this.newsService.getNews();
@@ -72,49 +74,52 @@ export class GameService {
     async loadPoints() {
         // TODO: Check connection
         this.points = await this.pointService.getPoints();
-        console.log('[game-service] points: ' + this.points);
         await this.storageService.setValue('points', this.pointService);
-}
-/*
-    // Do not draw markers, but add fence on map for thPoints[0]
-    async loadTHPoints() {
-      // TODO: Enable more routes
-        // TODO: Check connection
-        this.thPoints = await this.pointService.getTHPoints();
-        await this.storageService.setValue('thPoints', this.pointService);
     }
 
-    async loadTHPoints() {
-        // TODO: Check connection
-        this.thPoints = await this.pointService.getTHPoints();
-        await this.storageService.setValue('thPoints', this.pointService);
-    }*/
+    /*
+        // Do not draw markers, but add fence on map for thPoints[0]
+        async loadTHPoints() {
+          // TODO: Enable more routes
+            // TODO: Check connection
+            this.thPoints = await this.pointService.getTHPoints();
+            await this.storageService.setValue('thPoints', this.pointService);
+        }
+
+        async loadTHPoints() {
+            // TODO: Check connection
+            this.thPoints = await this.pointService.getTHPoints();
+            await this.storageService.setValue('thPoints', this.pointService);
+        }*/
 
     getClosestPoints(lat, lon, radius) {
         const sorted = this.utilityService.sortPoints(lat, lon, radius, this.points);
         return sorted; // TODO: Filter closest
     }
+
     getPoints() {
         return this.utilityService.toArray(this.points);
     }
+
     getPointData(pointId) {
-      this.activePoint = this.points.find((el) => el.id === pointId);
-      if (this.activePoint == null) {
-          throw Error('Point not found!');
-      }
-      if (!this.activePoint.locked || this.activeQuestion == null) {
-        return this.activePoint;
-        this.activeQuestion = this.activePoint.question;
-      } else {
-          return {
-              id: this.activePoint.id,
-              title: this.activePoint.id,
-              lat: this.activePoint.lat,
-              lon: this.activePoint.lon,
-              question: this.activeQuestion,
-          };
-      }
+        this.activePoint = this.points.find((el) => el.id === pointId);
+        if (this.activePoint == null) {
+            throw Error('Point not found!');
+        }
+        if (!this.activePoint.locked || this.activeQuestion == null) {
+            return this.activePoint;
+            this.activeQuestion = this.activePoint.question;
+        } else {
+            return {
+                id: this.activePoint.id,
+                title: this.activePoint.id,
+                lat: this.activePoint.lat,
+                lon: this.activePoint.lon,
+                question: this.activeQuestion,
+            };
+        }
     }
+
     answerQuestion(answer) {
         const question = this.getCurrentQuestion();
         if (question != null) {
@@ -126,7 +131,8 @@ export class GameService {
             this.alertsService.displayError('Invalid question', 'No active questions!');
         }
     }
+
     getCurrentQuestion() {
-      return this.activeQuestion;
+        return this.activeQuestion;
     }
 }

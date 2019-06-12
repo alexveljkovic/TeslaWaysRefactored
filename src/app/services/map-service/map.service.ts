@@ -11,6 +11,7 @@ import {
 } from '@ionic-native/google-maps/ngx';
 import {AlertsService} from '../alert-service/alerts.service';
 import {GameService} from '../game-service/game.service';
+import {GeofenceService} from '../geofence-service/geofence.service';
 
 @Injectable({
     providedIn: 'root'
@@ -20,7 +21,8 @@ export class MapService {
     mapDrag = false;
     subscriptions = [];
     constructor(private alertService: AlertsService,
-                private gameService: GameService) {
+                private gameService: GameService,
+                private geofenceService: GeofenceService) {
     }
 
     async loadMap() {
@@ -83,6 +85,9 @@ export class MapService {
                 lng: 20.369167
             }
         });
+
+        // await this.geofenceService.setGeofence(this.gameService.getPoints()[0]);
+
         marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
         });
     }
@@ -103,12 +108,13 @@ export class MapService {
     async setPointsMarkers() {
         const points = this.gameService.getPoints();
         points.forEach(point => {
+            console.log(point);
             this.setMarker(point);
         });
     }
     setMarker(point) {
         const marker: Marker = this.map.addMarkerSync({
-            title: point.adress,
+            title: point.name.sr,
             // TODO: custom icon
             icon: 'red',
             animation: 'DROP',
