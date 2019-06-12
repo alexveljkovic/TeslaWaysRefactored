@@ -4,9 +4,6 @@ import {ApiService} from '../services/api-service/api.service';
 import {AlertsService} from '../services/alert-service/alerts.service';
 import {NewsService} from '../services/news-service/news.service';
 
-import {
-    GoogleMap,
-} from '@ionic-native/google-maps/ngx';
 import {GameService} from '../services/game-service/game.service';
 
 @Component({
@@ -15,7 +12,6 @@ import {GameService} from '../services/game-service/game.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-    map: GoogleMap;
 
   constructor(
       private navCtrl: NavController,
@@ -23,9 +19,7 @@ export class HomePage {
       private apiService: ApiService,
       private newsService: NewsService,
       private gameService: GameService,
-  ) {
-      // console.log(navigator);
-  }
+  ) {}
 
   async gotoMap() {
     this.navCtrl.navigateForward('map');
@@ -37,7 +31,7 @@ export class HomePage {
     //   });
       // this.alertsService.displayError('Moja greska', 'Neki njen tekst');
       // console.log(await this.newsService.getNews(7));
-      //console.log(await this.newsService.getFeaturedNews());
+    //console.log(await this.newsService.getFeaturedNews());
     console.log(this.gameService.getClosestPoints(0, 0, 50));
   }
 
