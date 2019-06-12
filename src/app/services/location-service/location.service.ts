@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Geolocation, Geoposition} from '@ionic-native/geolocation/ngx';
 import {AlertsService} from '../alert-service/alerts.service';
-import {CameraPosition, GoogleMap, LatLng} from '@ionic-native/google-maps/ngx';
-import {ILatLng} from '@ionic-native/google-maps/ngx';
+import {LatLng} from '@ionic-native/google-maps/ngx';
 import {MapService} from '../map-service/map.service';
 import {Subscription} from 'rxjs';
 
@@ -16,17 +15,6 @@ export class LocationService {
     constructor(private geolocation: Geolocation,
                 private alertService: AlertsService,
                 private mapService: MapService) { }
-
-    async getPositionCoords() {
-        try {
-            this.data = await this.geolocation.getCurrentPosition({enableHighAccuracy: true});
-            console.log(`[location-service] lat: ${this.data.coords.latitude} lon: ${this.data.coords.longitude}`);
-            return this.data.coords;
-        } catch (e) {
-            console.log(e);
-            await this.alertService.displayError('Error with geolocation', 'Error getting location');
-        }
-    }
 
     async pointLocation() {
         try {
@@ -43,7 +31,18 @@ export class LocationService {
     }
 
     async unsubscribeWatcher() {
-        this.subscription.unsubscribe()
+        this.subscription.unsubscribe();
+    }
+
+    async getPositionCoords() {
+        try {
+            this.data = await this.geolocation.getCurrentPosition({enableHighAccuracy: true});
+            console.log(`[location-service] lat: ${this.data.coords.latitude} lon: ${this.data.coords.longitude}`);
+            return this.data.coords;
+        } catch (e) {
+            console.log(e);
+            await this.alertService.displayError('Error with geolocation', 'Error getting location');
+        }
     }
 }
 

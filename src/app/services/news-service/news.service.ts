@@ -17,15 +17,13 @@ export class NewsService {
     private utilities: UtilitiesService) { }
 
   async getNews(limit = 0) {
-    const { BASE_URL } = this.configService.getParams();
     try {
-        console.log(BASE_URL);
-        this.res = await this.apiService.GetData(`${BASE_URL}/posts`);
+        this.res = await this.apiService.GetData('news/');
 
         if (limit !== 0) {
-            return this.res.data.slice(0, limit);
+            return this.res.slice(0, limit);
         } else {
-            return this.res.data;
+            return this.res;
         }
 
     } catch (err) {
@@ -40,7 +38,7 @@ export class NewsService {
           console.log(BASE_URL);
           this.res = await this.apiService.GetData(`${BASE_URL}/posts/1`);
 
-          return this.utilities.toArray(this.res.data);
+          return this.utilities.toArray(this.res);
 
       } catch (err) {
           console.log(err);

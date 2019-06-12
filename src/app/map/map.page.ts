@@ -6,27 +6,29 @@ import {LocationService} from '../services/location-service/location.service';
 import {MapService} from '../services/map-service/map.service';
 
 @Component({
-  selector: 'app-map',
-  templateUrl: './map.page.html',
-  styleUrls: ['./map.page.scss'],
+    selector: 'app-map',
+    templateUrl: './map.page.html',
+    styleUrls: ['./map.page.scss'],
 })
 export class MapPage implements OnInit, OnDestroy {
     map: GoogleMap;
     currentPos: Coordinates;
-  constructor(
-      private alertsService: AlertsService,
-      private platform: Platform,
-      private mapService: MapService,
-      private location: LocationService,
-  ) { }
+    constructor(
+        private alertsService: AlertsService,
+        private platform: Platform,
+        private mapService: MapService,
+        private location: LocationService,
+    ) {
+    }
 
-  async ngOnInit() {
-      // TODO: Check connection
-      await this.platform.ready();
-      await this.mapService.loadMap();
-      await this.location.pointLocation();
-  }
-  async ngOnDestroy() {
-      await this.location.unsubscribeWatcher();
-  }
+    async ngOnInit() {
+        // TODO: Check connection
+        await this.platform.ready();
+        await this.mapService.loadMap();
+        await this.location.pointLocation();
+    }
+
+    async ngOnDestroy() {
+        await this.location.unsubscribeWatcher();
+    }
 }
