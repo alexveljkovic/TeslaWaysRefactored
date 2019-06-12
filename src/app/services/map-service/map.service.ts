@@ -6,7 +6,7 @@ import {
   GoogleMapOptions,
   GoogleMaps,
   GoogleMapsEvent,
-  ILatLng, LatLng,
+  LatLng,
   Marker
 } from '@ionic-native/google-maps/ngx';
 import {AlertsService} from '../alert-service/alerts.service';
@@ -30,12 +30,8 @@ export class MapService {
           API_KEY_FOR_BROWSER_RELEASE: 'AIzaSyAz1sU7SQbb-IUY6JlXr3xWDmrQobct5aM',
           API_KEY_FOR_BROWSER_DEBUG: 'AIzaSyAz1sU7SQbb-IUY6JlXr3xWDmrQobct5aM',
       });
-
-      console.log('Pre getposition');
-      // this.currentPos = await this.location.getPositionCoords();
-
       const mapOptions: GoogleMapOptions = {
-        camera: {
+          camera: {
           target: {
               lat: 44.811222,
               lng: 20.369167
