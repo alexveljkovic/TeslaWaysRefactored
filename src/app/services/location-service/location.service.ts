@@ -31,7 +31,11 @@ export class LocationService {
     }
 
     async unsubscribeWatcher() {
-        this.subscription.unsubscribe();
+        try {
+            this.subscription.unsubscribe();
+        } catch (e) {
+            await this.alertService.displayError('Error while unsubscribing', 'Cannot unsubscribe position watcher');
+        }
     }
 
     async getPositionCoords() {

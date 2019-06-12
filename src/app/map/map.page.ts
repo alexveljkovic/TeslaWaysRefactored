@@ -4,6 +4,7 @@ import {AlertsService} from '../services/alert-service/alerts.service';
 import {Platform} from '@ionic/angular';
 import {LocationService} from '../services/location-service/location.service';
 import {MapService} from '../services/map-service/map.service';
+import {GameService} from '../services/game-service/game.service';
 
 @Component({
     selector: 'app-map',
@@ -18,6 +19,7 @@ export class MapPage implements OnInit, OnDestroy {
         private platform: Platform,
         private mapService: MapService,
         private location: LocationService,
+        private gameService: GameService
     ) {
     }
 
@@ -25,10 +27,13 @@ export class MapPage implements OnInit, OnDestroy {
         // TODO: Check connection
         await this.platform.ready();
         await this.mapService.loadMap();
+        // TODO: Call geofenceService to set geofence (this.gameService.getPoints())
+        await this.mapService.setPointsMarkers();
         await this.location.pointLocation();
     }
 
     async ngOnDestroy() {
         await this.location.unsubscribeWatcher();
+        this.mapService.unsubscribeWatchers();
     }
 }
