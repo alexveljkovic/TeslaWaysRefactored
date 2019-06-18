@@ -17,15 +17,10 @@ export class NewsService {
         private utilities: UtilitiesService) {
     }
 
-    async getNews(limit = 0) {
+    async getNews() {
         try {
             this.res = await this.apiService.GetData('news/');
-
-            if (limit !== 0) {
-                return this.res.slice(0, limit);
-            } else {
-                return this.res;
-            }
+            return this.res;
 
         } catch (err) {
             console.log(err);

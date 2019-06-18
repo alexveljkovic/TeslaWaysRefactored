@@ -1,3 +1,15 @@
+.location-address {
+  font-size: 12px;
+  margin-top: 0px;
+  text-transform: uppercase;
+  font-family: 'semibold'; }
 
+.location-image {
+  width: 100%; }
+
+.location-content {
+  line-height: 23px;
+  font-size: 14px;
+  margin-bottom: 20px; }
 
 /*# sourceMappingURL=location.page.css.map */

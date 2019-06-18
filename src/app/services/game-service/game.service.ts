@@ -90,7 +90,7 @@ export class GameService {
 
     async loadFeatured() {
         // TODO: Check connection
-        this.news = await this.newsService.getFeaturedNews();
+        this.featured = await this.newsService.getFeaturedNews();
     }
 
     async loadPoints() {

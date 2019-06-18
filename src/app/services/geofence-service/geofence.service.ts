@@ -12,13 +12,13 @@ export class GeofenceService  {
     constructor(private alertService: AlertsService,
                 private geofence: Geofence,
                 private utilitiesService: UtilitiesService) {
-        this.geofence.initialize().then(
-            () => {
-                    this.transitionWatcher = this.subscribeWatcher();
-                },
-            (err) => {
-                this.alertService.displayError('Error while initalizing geofence', 'Unable to initialize');
-            });
+        // this.geofence.initialize().then(
+        //     () => {
+        //             this.transitionWatcher = this.subscribeWatcher();
+        //         },
+        //     (err) => {
+        //         this.alertService.displayError('Error while initalizing geofence', 'Unable to initialize');
+        //     });
     }
     subscribeWatcher() {
         return this.geofence.onTransitionReceived().subscribe((data) => {
@@ -52,26 +52,26 @@ export class GeofenceService  {
     }
 
     async setGeofence(point) {
-        const fence = {
-            id: point.id, // any unique ID
-            latitude:       this.utilitiesService.toFloat(point.lat), // 44.811222,
-            longitude:      this.utilitiesService.toFloat(point.lon), // 20.369167,
-            radius:         this.utilitiesService.toInt(point.radius), // 50,
-            transitionType: 3, // enter and leave
-            notification: { // notification settings
-                id:             this.utilitiesService.toInt(point.id), // any unique ID
-                title:          'Aktivirana lokacija!', // notification title
-                text:           `Dosli ste do lokacije ${point.name}`, // notification body
-                openAppOnClick: true // open app when notification is tapped
-            }
-        };
-        try {
-            await this.geofence.addOrUpdate(fence);
-            console.log('[geofence-service]');
-            console.log(`${fence.latitude} ${fence.longitude} ${fence.radius}`);
-        } catch (e) {
-            console.log(e);
-            await this.alertService.displayError('Error while setting geofence', 'Unable to set geofence');
-        }
+        // const fence = {
+        //     id: point.id, // any unique ID
+        //     latitude:       this.utilitiesService.toFloat(point.lat), // 44.811222,
+        //     longitude:      this.utilitiesService.toFloat(point.lon), // 20.369167,
+        //     radius:         this.utilitiesService.toInt(point.radius), // 50,
+        //     transitionType: 3, // enter and leave
+        //     notification: { // notification settings
+        //         id:             this.utilitiesService.toInt(point.id), // any unique ID
+        //         title:          'Aktivirana lokacija!', // notification title
+        //         text:           `Dosli ste do lokacije ${point.name}`, // notification body
+        //         openAppOnClick: true // open app when notification is tapped
+        //     }
+        // };
+        // try {
+        //     await this.geofence.addOrUpdate(fence);
+        //     console.log('[geofence-service]');
+        //     console.log(`${fence.latitude} ${fence.longitude} ${fence.radius}`);
+        // } catch (e) {
+        //     console.log(e);
+        //     await this.alertService.displayError('Error while setting geofence', 'Unable to set geofence');
+        // }
     }
 }

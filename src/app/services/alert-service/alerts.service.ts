@@ -15,8 +15,8 @@ export class AlertsService {
       const alert = await this.toastController.create({
           message,
           duration: 2000,
-          color: 'warning',
-          position: 'bottom',
+          color: 'dark',
+          position: 'middle',
       });
 
       alert.present();

@@ -1,0 +1,36 @@
+.num-loc {
+  color: #f90;
+}
+
+.location-count {
+  font-weight: bold;
+  margin-top: 10px;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: #828282;
+}
+
+.thumb {
+  margin-top: 10px;
+  background-color: gray;
+  width: 70px;
+  margin-right: 16px;
+  height: 70px;
+}
+
+ion-list {
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+}
+
+.news-title {
+  color: #4e4e4e;
+  font-family: 'semibold';
+  font-size: 15px;
+  margin-top: 0px;
+}
+
+.news-date {
+  font-size: 12px;
+  margin: 0px;
+}

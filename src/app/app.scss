@@ -5,7 +5,104 @@
 // file can hold Sass mixins, functions, and placeholder classes to be imported
 // and used throughout the application.
 
+@font-face {
+  src: url('../assets/fonts/OpenSans-Semibold.ttf');
+  font-family: "semibold";
+}
+
+@font-face {
+  src: url('../assets/fonts/OpenSans-Light.ttf');
+  font-family: "light";
+}
+
+@font-face {
+  src: url('../assets/fonts/OpenSans-Regular.ttf');
+  font-family: "regular";
+}
+
+* {
+  font-family: 'regular';
+}
+
 .navbar-button {
   font-size: 20px;
   padding: 10px;
+}
+
+ion-title {
+  position: absolute;
+  left: 0px;
+  width: 100%;
+  text-align: center;
+  top: 11px !important;
+}
+
+.logo-big {
+  height: 125px;
+}
+
+.logo-header {
+  height: 35px;
+}
+
+h1, h2, h3 {
+  font-family: "semibold";
+}
+
+h2 {
+  color: #828282;
+  padding-bottom: 5px;
+  border-bottom: 2px solid rgba(255,153,0, 0.3);
+  font-size: 17px;
+  text-transform: uppercase;
+}
+
+ion-card-content {
+  font-family: 'regular';
+}
+
+ion-card-subtitle {
+  color: #ff9601;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+ion-card-title {
+  text-transform: uppercase;
+  color: #4e4e4e;
+  font-size: 17px;
+  font-family: semibold;
+}
+
+.tesla, .tesla .toolbar-container {
+  background-color: #4e4e4e !important;
+  color: white;
+}
+
+.navbar-button {
+  background: none;
+  color: white;
+  text-transform: uppercase;
+  font-size: 15px;
+  font-family: semibold;
+  outline: none;
+}
+
+ion-card {
+  background-color: white !important;
+  margin: 0px !important;
+}
+
+ion-backdrop {
+  background-color: rgba(255,255,255,1);
+  opacity: 1 !important;
+}
+
+.loading-wrapper {
+  box-shadow: none !important;
+  background-color: white !important;
+}
+
+.ion-padding {
+  background-color: #f7f7f7;
 }

@@ -158,10 +158,10 @@ export class MapPage implements OnDestroy {
         console.log(point);
 
         if (this.discoveredPoint == null || pointId !== this.discoveredPoint.id) {
-            this.alertsService.displayNotification('You need to get closer to the location to unlock it.');
+            this.alertsService.displayNotification('You need to get closer to unlock this location.');
         } else {
             if (this.gameService.unlockedPoints.includes(point.id) || this.gameService.activeQuestion == null) {
-                this.gameService.addUnlockedPoint(pointId);
+                this.gameService.addUnlockedPoint(pointId)
                 this.gameService.setActivePoint(point);
                 this.gameService.setActiveQuestion(this.utilities.choice(point.questions));
                 this.navController.navigateForward('location');
@@ -182,6 +182,14 @@ export class MapPage implements OnDestroy {
                     this.navController.navigateForward('location');
                 }
             }
+        }
+    }
+
+    changeLanguage() {
+        if (this.config.language === 'en') {
+            this.configService.setParam('language', 'sr');
+        } else {
+            this.configService.setParam('language', 'en');
         }
     }
 }

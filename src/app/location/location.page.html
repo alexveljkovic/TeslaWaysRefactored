@@ -1,21 +1,21 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Location page</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title><img src="./assets/logo.png" alt="" class="logo-header"></ion-title>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <!--<ion-buttons slot="end">-->
-      <!--<button class="navbar-button" (click)="changeLanguage()">{{this.config.language}}</button>-->
-    <!--</ion-buttons>-->
+    <ion-buttons slot="end">
+      <button class="navbar-button" (click)="changeLanguage()">{{this.config.language}}</button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="ion-padding">
-    <img src="{{location.imageUrl}}" alt="">
-    <h2>{{location.name.sr}}</h2>
-    <h3>{{location.address}}, {{location.city}}, {{location.country}}</h3>
-    <p [innerHTML]="location.description.sr"></p>
+    <img class="location-image" src="{{location.imageUrl}}" alt="">
+    <h2>{{location.name[this.config.language]}}</h2>
+    <p class="location-address">{{location.address}}, {{location.city}}</p>
+    <p class="location-content" [innerHTML]="location.description[this.config.language]"></p>
   </div>
 </ion-content>
 

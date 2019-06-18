@@ -1,7 +1,7 @@
 <ion-menu side="start" menuId="first">
-  <ion-header>
+  <ion-header class="menu-header">
     <ion-toolbar color="primary">
-      <ion-title>Start Menu</ion-title>
+      <ion-title><img src="./assets/logo.png" alt="" class="logo-header"></ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content>
@@ -18,9 +18,9 @@
 <ion-router-outlet main></ion-router-outlet>
 
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>
-      TeslaWays
+      <img src="./assets/logo.png" alt="" class="logo-header">
     </ion-title>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
@@ -33,15 +33,41 @@
 
 <ion-content>
   <div class="ion-padding">
-    <h2>Rute</h2>
+    <div class="featured-news" *ngIf="this.gameService.featured.length > 0">
+      <h2>Obaveštenje</h2>
+      <ion-card button (click)="gotoFeatured(this.gameService.featured[0].id)">
+        <ion-card-header>
+          <ion-card-subtitle>{{this.gameService.featured[0].date}}</ion-card-subtitle>
+          <ion-card-title>{{this.gameService.featured[0].title[this.config.language]}}</ion-card-title>
+        </ion-card-header>
+      </ion-card>
+    </div>
+    <h2>Otkrijte teslu</h2>
     <ion-card button (click)="gotoMap(route.id)" *ngFor="let route of this.gameService.routes.slice().reverse()">
+      <img src="http://teslaways.rs/images/slider/1.jpg" style="width:100%" alt="">
       <ion-card-header>
         <ion-card-subtitle>{{route.type[this.config.language]}}</ion-card-subtitle>
         <ion-card-title>{{route.name[this.config.language]}}</ion-card-title>
       </ion-card-header>
 
-      <ion-card-content [innerHTML]="route.description[this.config.language]">
+      <ion-card-content>
+        <p>{{route.description[this.config.language]}}</p>
+        <p class="location-count">
+          Number of locations: <span class="num-loc">{{route.routePoints.length}}</span>
+        </p>
       </ion-card-content>
     </ion-card>
+    <h2>Novosti</h2>
+    <ion-list>
+      <ion-item (click)="gotoNews(news.id)" *ngFor="let news of this.gameService.news.slice().reverse()">
+        <ion-thumbnail class="thumb">
+          <img [src]="news.imageUrl">
+        </ion-thumbnail>
+        <ion-label>
+          <p class="news-date">{{news.date}}</p>
+          <p class="news-title">{{news.title[this.config.language]}}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
   </div>
 </ion-content>
