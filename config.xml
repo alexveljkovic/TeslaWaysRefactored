@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="io.ionic.teslaways" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>TeslaWays</name>
-    <name short="MyApp">MyApp</name>
+    <name short="TeslaWays">TeslaWays</name>
     <description>TeslaWays Project Application</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Klaster puteva kulture</author>
     <content src="index.html" />
