@@ -1,47 +1,47 @@
+<ion-menu side="start" menuId="first">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Start Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-router-outlet main></ion-router-outlet>
+
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Ionic Blank
+      TeslaWays
     </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <button class="navbar-button" (click)="changeLanguage()">{{this.config.language}}</button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
-    <button ion-button primary (click)="gotoMap()">Mapa</button>
-    <video autoplay></video>
-    <img src="">
-    <canvas style="display:none;"></canvas>
+    <h2>Rute</h2>
+    <ion-card button (click)="gotoMap(route.id)" *ngFor="let route of this.gameService.routes.slice().reverse()">
+      <ion-card-header>
+        <ion-card-subtitle>{{route.type[this.config.language]}}</ion-card-subtitle>
+        <ion-card-title>{{route.name[this.config.language]}}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content [innerHTML]="route.description[this.config.language]">
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>
-
-
-
-<script>
-    const captureVideoButton =
-        document.querySelector('#screenshot .capture-button');
-    const screenshotButton = document.querySelector('#screenshot-button');
-    const img = document.querySelector('#screenshot img');
-    const video = document.querySelector('#screenshot video');
-
-    const canvas = document.createElement('canvas');
-
-    captureVideoButton.onclick = function() {
-
-    };
-
-    screenshotButton.onclick = video.onclick = function() {
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        canvas.getContext('2d').drawImage(video, 0, 0);
-        // Other browsers will fall back to image/png
-        img.src = canvas.toDataURL('image/webp');
-    };
-
-    function handleSuccess(stream) {
-        screenshotButton.disabled = false;
-        video.srcObject = stream;
-    }
-</script>

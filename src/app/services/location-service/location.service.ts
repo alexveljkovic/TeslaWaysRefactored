@@ -5,6 +5,8 @@ import {LatLng} from '@ionic-native/google-maps/ngx';
 import {MapService} from '../map-service/map.service';
 import {Subscription} from 'rxjs';
 
+const DEVELOPMENT = true;
+
 @Injectable({
     providedIn: 'root'
 })
@@ -14,19 +16,20 @@ export class LocationService {
 
     constructor(private geolocation: Geolocation,
                 private alertService: AlertsService,
-                private mapService: MapService) { }
+                private mapService: MapService) {
+        this.init();
+    }
 
-    async pointLocation() {
+    async init() {
         try {
-            // TODO: timeout not working?
             const watcher = this.geolocation.watchPosition({enableHighAccuracy: true, timeout: 100000, maximumAge: 5000});
             this.subscription = watcher.subscribe((data: any) => {
                 const latlng: LatLng = new LatLng(data.coords.latitude, data.coords.longitude);
-                this.mapService.setTarget(latlng);
+                console.log(latlng);
             });
         } catch (e) {
             console.log(e);
-            await this.alertService.displayError('Error with map', 'Error while watching position');
+            await this.alertService.displayError('Problem with Geolocation', 'Unable to start location service');
         }
     }
 
@@ -39,13 +42,17 @@ export class LocationService {
     }
 
     async getPositionCoords() {
-        try {
-            this.data = await this.geolocation.getCurrentPosition({enableHighAccuracy: true});
-            console.log(`[location-service] lat: ${this.data.coords.latitude} lon: ${this.data.coords.longitude}`);
-            return this.data.coords;
-        } catch (e) {
-            console.log(e);
-            await this.alertService.displayError('Error with geolocation', 'Error getting location');
+        if (!DEVELOPMENT) {
+            try {
+                this.data = await this.geolocation.getCurrentPosition({enableHighAccuracy: true});
+                console.log(`[location-service] lat: ${this.data.coords.latitude} lon: ${this.data.coords.longitude}`);
+                return this.data.coords;
+            } catch (e) {
+                console.log(e);
+                await this.alertService.displayError('Error with geolocation', 'Error getting location');
+            }
+        } else {
+            return { latitude: 44.8224036, longitude: 20.4511382 };
         }
     }
 }

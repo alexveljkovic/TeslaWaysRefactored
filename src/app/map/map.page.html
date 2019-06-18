@@ -4,9 +4,36 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <button class="navbar-button" (click)="changeLanguage()">{{this.config.language}}</button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<body>
-    <div id="map_canvas" style="height: 90%"></div>
-</body>
+  <div id="map_canvas" style="height: 40%"></div>
+  <div class="closest-point-wrap" button *ngIf="this.closestPoints.length > 0">
+    <div id="ripple" (click)="gotoLocation(this.closestPoints[0].id)"></div>
+    <div class="location-wrap" (click)="gotoLocation(this.closestPoints[0].id)">
+      <p class="closest-title">
+          <ion-icon name="checkmark-circle-outline" class="point-status" *ngIf="!this.closestPoints[0].discovered"></ion-icon>
+          <ion-icon name="lock" class="point-status" *ngIf="this.closestPoints[0].discovered"></ion-icon>
+           {{this.closestPoints[0].name.sr}}</p>
+      <p class="closest-address">{{this.closestPoints[0].address}}</p>
+    </div>
+    <div class="distance-meter" id="dist-meter">
+      <p (click)="pointToLocation(this.closestPoints[0].lat, this.closestPoints[0].lon)">
+          <ion-icon class="list-pin" name="pin"></ion-icon>
+          {{this.closestPoints[0].dist}}
+      </p>
+    </div>
+  </div>
+<ion-content style="height: 60%">
+    <ion-list>
+      <ion-item *ngFor="let point of this.closestPoints.slice(1)">
+        <div (click)="pointToLocation(point.lat, point.lon)" class="dist" slot="end"><ion-icon class="list-pin" name="pin"></ion-icon> <span class="meters">{{point.dist}}</span></div>
+        <ion-label (click)="gotoLocation(point.id)">
+            <ion-icon name="checkmark-circle-outline" class="point-status" *ngIf="!point.discovered"></ion-icon>
+            <ion-icon name="lock" class="point-status" *ngIf="point.discovered"></ion-icon> {{point.name[this.config.language]}} <p class="closest-address">{{point.address}}</p></ion-label>
+      </ion-item>
+    </ion-list>
+</ion-content>

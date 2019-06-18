@@ -34,10 +34,8 @@ export class NewsService {
     }
 
     async getFeaturedNews() {
-        const {BASE_URL} = this.configService.getParams();
         try {
-            console.log(BASE_URL);
-            this.res = await this.apiService.GetData(`${BASE_URL}/posts/1`);
+            this.res = await this.apiService.GetData('featured/');
 
             return this.utilities.toArray(this.res);
 

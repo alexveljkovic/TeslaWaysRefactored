@@ -12,6 +12,10 @@ import {
 import {AlertsService} from '../alert-service/alerts.service';
 import {GameService} from '../game-service/game.service';
 import {GeofenceService} from '../geofence-service/geofence.service';
+import {ConfigService} from '../config-service/config.service';
+import {Events} from '@ionic/angular';
+
+
 
 @Injectable({
     providedIn: 'root'
@@ -20,12 +24,23 @@ export class MapService {
     map: GoogleMap;
     mapDrag = false;
     subscriptions = [];
+    markers: any = [];
+    activeMarker: any = null;
+    config: any = {};
     constructor(private alertService: AlertsService,
                 private gameService: GameService,
-                private geofenceService: GeofenceService) {
+                private geofenceService: GeofenceService,
+                private configService: ConfigService,
+                private events: Events
+                ) {
+        this.config = this.configService.getParams();
+
+        this.events.subscribe('config-update', (update) => {
+            this.config = update;
+        });
     }
 
-    async loadMap() {
+    async loadMap(center) {
         // This code is necessary for browser
         /*
         Environment.setEnv({
@@ -33,17 +48,18 @@ export class MapService {
             API_KEY_FOR_BROWSER_DEBUG: 'AIzaSyAfw3u7ZmqYhC6EXOsPLizVoYy00T9wn6M',
         });*/
 
-        Environment.setEnv({
-            API_KEY_FOR_BROWSER_RELEASE: 'AIzaSyAz1sU7SQbb-IUY6JlXr3xWDmrQobct5aM',
-            API_KEY_FOR_BROWSER_DEBUG: 'AIzaSyAz1sU7SQbb-IUY6JlXr3xWDmrQobct5aM',
-        });
+        // Environment.setEnv({
+        //     API_KEY_FOR_BROWSER_RELEASE: 'AIzaSyAz1sU7SQbb-IUY6JlXr3xWDmrQobct5aM',
+        //     API_KEY_FOR_BROWSER_DEBUG: 'AIzaSyAz1sU7SQbb-IUY6JlXr3xWDmrQobct5aM',
+        //     API_KEY_FOR_ANDROID: 'AIzaSyAfw3u7ZmqYhC6EXOsPLizVoYy00T9wn6M',
+        // });
         const mapOptions: GoogleMapOptions = {
             camera: {
                 target: {
-                    lat: 44.811222,
-                    lng: 20.369167
+                    lat: center.lat,
+                    lng: center.lon,
                 },
-                zoom: 18,
+                zoom: center.zoom,
                 tilt: 30,
             },
             controls: {
@@ -63,8 +79,8 @@ export class MapService {
         };
 
         const mapCanvas = document.getElementById('map_canvas');
-        mapCanvas.style.height = window.innerHeight * 9 / 10 + 'px';
         this.map = GoogleMaps.create(mapCanvas, mapOptions);
+        console.log('Map created.');
 
         await this.map.one(GoogleMapsEvent.MAP_READY);
 
@@ -76,37 +92,35 @@ export class MapService {
             this.mapDrag = false;
         }));
         console.log('Map ready triggered');
-        const marker: Marker = this.map.addMarkerSync({
-            title: 'Initial location',
-            icon: 'blue',
-            animation: 'DROP',
-            position: {
-                lat: 44.811222,
-                lng: 20.369167
-            }
-        });
 
-        // await this.geofenceService.setGeofence(this.gameService.getPoints()[0]);
-
-        marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
-        });
+        await this.geofenceService.setGeofence(this.gameService.getPoints()[0]);
     }
 
-    async setTarget(position: LatLng) {
-        // console.log(`[map-service] Setting target ${position.lat}, ${position.lng}`);
+    async setTarget(position: any, showInfo = true) {
+        console.log(`[map-service] Setting target ${position.lat}, ${position.lng}`);
         if (!this.mapDrag) {
-            const settings: CameraPosition<LatLng> = {target: position};
+            const settings: CameraPosition<LatLng> = {target: position, duration: 1000};
             try {
                 await this.map.animateCamera(settings);
             } catch (e) {
                 console.log(e);
                 await this.alertService.displayError('Error with animate', 'Error while pointing location');
             }
+
+            for (const markerObj of this.markers) {
+                if (markerObj.lat === position.lat && markerObj.lon === position.lng) {
+                    if (this.activeMarker) {
+                        this.activeMarker.hideInfoWindow();
+                    }
+                    this.activeMarker = markerObj.marker;
+                    markerObj.marker.showInfoWindow();
+                }
+            }
         }
     }
 
-    async setPointsMarkers() {
-        const points = this.gameService.getPoints();
+    async setPointsMarkers(routeId) {
+        const points = this.gameService.getPoints({}, routeId);
         points.forEach(point => {
             console.log(point);
             this.setMarker(point);
@@ -114,7 +128,7 @@ export class MapService {
     }
     setMarker(point) {
         const marker: Marker = this.map.addMarkerSync({
-            title: point.name.sr,
+            title: point.name[this.config.language],
             // TODO: custom icon
             icon: 'red',
             animation: 'DROP',
@@ -122,6 +136,11 @@ export class MapService {
                 lat: point.lat,
                 lng: point.lon
             }
+        });
+        this.markers.push({
+            lat: point.lat,
+            lon: point.lon,
+            marker
         });
     }
     unsubscribeWatchers() {

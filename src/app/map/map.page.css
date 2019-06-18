@@ -1,5 +1,74 @@
 #map_canvas {
-  height: 200px;
+  height: 90%;
   width: 100%; }
+
+ion-label:hover {
+  color: orange; }
+
+.closest-point-wrap {
+  padding: 16px;
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
+  height: 70px;
+  position: relative;
+  z-index: 1000;
+  overflow: hidden; }
+  .closest-point-wrap .closest-label {
+    font-weight: bold;
+    font-size: 12px;
+    margin: 0px 0px 5px 0px; }
+  .closest-point-wrap .closest-title {
+    font-size: 15px;
+    margin: 0px 0px 5px 0px; }
+  .closest-point-wrap .distance-meter {
+    float: right;
+    top: -50px;
+    position: relative;
+    font-size: 21px; }
+    .closest-point-wrap .distance-meter ion-icon {
+      color: #e72321; }
+  .closest-point-wrap .location-wrap {
+    width: 50%;
+    height: 100%; }
+
+.meters {
+  min-width: 50px;
+  display: inline-block;
+  text-align: right; }
+
+.dist {
+  font-size: 13px;
+  position: relative;
+  top: -5px; }
+  .dist ion-icon {
+    font-size: 22px;
+    color: #e40e0e;
+    position: relative;
+    top: 4px; }
+
+.point-status {
+  color: #a3a1a1;
+  position: relative;
+  font-size: 15px;
+  top: 2px; }
+
+.closest-address {
+  font-size: 12px;
+  margin: 0px 0px 0px 0px;
+  color: black;
+  margin-left: 20px; }
+
+#ripple {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  background-color: red;
+  border-radius: 50%;
+  left: 50%;
+  top: 32px;
+  opacity: 0; }
+  #ripple.active {
+    transform: scale(300);
+    opacity: 0 !important;
+    transition: 1.5s; }
 
 /*# sourceMappingURL=map.page.css.map */

@@ -1,0 +1,27 @@
+<ion-content>
+  <div class="ion-padding">
+    <h3>
+      Da bi ste otključali lokaciju, potrebno je da odgovorite na sledeće pitanje:
+    </h3>
+    <p>
+      {{this.question.sr.questionText}}
+    </p>
+    <ion-list>
+      <ion-item button (click)="answerQuestion(this.question.sr.possibleAnswers[0])">
+        <ion-label>
+          a) {{this.question.sr.possibleAnswers[0]}}
+        </ion-label>
+      </ion-item>
+      <ion-item button (click)="answerQuestion(this.question.sr.possibleAnswers[1])">
+        <ion-label>
+          b) {{this.question.sr.possibleAnswers[1]}}
+        </ion-label>
+      </ion-item>
+      <ion-item button (click)="answerQuestion(this.question.sr.possibleAnswers[2])">
+        <ion-label>
+          c) {{this.question.sr.possibleAnswers[2]}}
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

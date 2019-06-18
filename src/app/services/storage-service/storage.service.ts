@@ -12,7 +12,7 @@ export class StorageService {
     }
 
     async getValue(key) {
-        const res = await this.storage.get(JSON.parse(key));
-        return res;
+        const res = await this.storage.get(key);
+        return JSON.parse(res);
     }
 }

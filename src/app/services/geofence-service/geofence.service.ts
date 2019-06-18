@@ -40,11 +40,11 @@ export class GeofenceService  {
             await this.alertService.displayError('Error while unsubscribing', 'Cannot unsubscribe watcher');
         }
     }
-    async removeGeofence(pointName) {
+    async removeGeofence(pointId) {
         try {
-            await this.geofence.remove(pointName);
+            await this.geofence.remove(pointId);
             console.log('Removed geofence on location');
-            console.log(pointName);
+            console.log(pointId);
         } catch (e) {
             console.log(e);
             await this.alertService.displayError('Error while removing geofence', 'Cannot remove geofence');
@@ -53,7 +53,7 @@ export class GeofenceService  {
 
     async setGeofence(point) {
         const fence = {
-            id: point.name.sr, // any unique ID
+            id: point.id, // any unique ID
             latitude:       this.utilitiesService.toFloat(point.lat), // 44.811222,
             longitude:      this.utilitiesService.toFloat(point.lon), // 20.369167,
             radius:         this.utilitiesService.toInt(point.radius), // 50,
