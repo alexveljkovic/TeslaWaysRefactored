@@ -3,7 +3,6 @@
     <name>TeslaWays</name>
     <name short="MyApp">MyApp</name>
     <description>TeslaWays Project Application</description>
-    <!--Dodati prave podatke-->
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Klaster puteva kulture</author>
     <content src="index.html" />
     <access origin="*" />
