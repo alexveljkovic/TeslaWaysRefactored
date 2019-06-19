@@ -5,7 +5,7 @@ import {LatLng} from '@ionic-native/google-maps/ngx';
 import {MapService} from '../map-service/map.service';
 import {Subscription} from 'rxjs';
 
-const DEVELOPMENT = true;
+const DEVELOPMENT = false;
 
 @Injectable({
     providedIn: 'root'
