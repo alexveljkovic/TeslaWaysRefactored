@@ -57,6 +57,7 @@ export class GameService {
     public activePoint: any = {};
     public activeQuestion: any = null;
     public activeRoute: any = null;
+    public activeNews: any = {};
     public unlockedPoints: any = [];
     public profile: any = {};
 
@@ -211,8 +212,9 @@ export class GameService {
         return foundPoint;
     }
 
-    addUnlockedPoint(pointId) {
+    async addUnlockedPoint(pointId) {
         this.unlockedPoints.push(pointId);
+        await this.saveState();
     }
 
     // answerQuestion(answer) {
@@ -237,5 +239,41 @@ export class GameService {
 
     getActiveRoute() {
         return this.activeRoute;
+    }
+
+    async loadState() {
+        const loadedState = await this.storageService.getValue('state') || {};
+
+        const newState = {};
+
+        if (loadedState) {
+            this.unlockedPoints = loadedState.unlockedPoints;
+        } else {
+            await this.saveState();
+        }
+    }
+
+    async saveState() {
+        await this.storageService.setValue('state', {
+            unlockedPoints: this.unlockedPoints,
+        });
+    }
+
+    async setActiveNews(newsId, type = 'news') {
+        if (type === 'news') {
+            this.activeNews = this.news.find(el => el.id === newsId);
+        } else {
+            this.activeNews = this.featured.find(el => el.id === newsId);
+            this.activeNews.featured = true;
+        }
+    }
+
+    getActiveNews() {
+        return this.activeNews;
+    }
+
+    async clearState() {
+        this.unlockedPoints = [];
+        await this.saveState();
     }
 }

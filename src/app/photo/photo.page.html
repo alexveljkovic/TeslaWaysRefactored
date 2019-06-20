@@ -12,10 +12,6 @@
 
 <ion-content>
   <div class="ion-padding">
-    <img class="image-single" src="{{location.imageUrl}}" alt="">
-    <h2>{{location.name[this.config.language]}}</h2>
-    <p class="location-address">{{location.address}}, {{location.city}}</p>
-    <p class="location-content" [innerHTML]="location.description[this.config.language]"></p>
+    <img [src]="this.image" *ngIf="this.image" alt="">
   </div>
 </ion-content>
-

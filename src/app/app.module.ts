@@ -19,10 +19,12 @@ import {PointService} from './services/point-service/point.service';
 import {LocationService} from './services/location-service/location.service';
 import {LoaderService} from './services/loader-service/loader.service';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
+import {Camera} from '@ionic-native/camera/ngx';
 import {MapService} from './services/map-service/map.service';
 import {GeofenceService} from './services/geofence-service/geofence.service';
 import {Geofence} from '@ionic-native/geofence/ngx';
 import {QuestionComponent} from './components/question/question.component';
+import { File } from '@ionic-native/file/ngx';
 
 @NgModule({
     declarations: [AppComponent, QuestionComponent],
@@ -47,6 +49,8 @@ import {QuestionComponent} from './components/question/question.component';
         Geofence,
         RouteService,
         LoaderService,
+        Camera,
+        File,
         QuestionComponent,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],

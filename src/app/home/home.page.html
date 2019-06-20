@@ -57,6 +57,13 @@
         </p>
       </ion-card-content>
     </ion-card>
+    <h2>Tesla Foto</h2>
+    <ion-card button (click)="gotoPhoto()">
+      <ion-card-header>
+        <ion-card-subtitle>Tesla je uvek aktuelan</ion-card-subtitle>
+        <ion-card-title>Napravite fotografiju sa teslom!</ion-card-title>
+      </ion-card-header>
+    </ion-card>
     <h2>Novosti</h2>
     <ion-list>
       <ion-item (click)="gotoNews(news.id)" *ngFor="let news of this.gameService.news.slice().reverse()">

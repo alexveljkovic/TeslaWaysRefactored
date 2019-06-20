@@ -1,7 +1,7 @@
 {
 "version": 3,
 "mappings": "AAAA,iBAAkB;EAChB,SAAS,EAAE,IAAI;EACf,UAAU,EAAE,GAAG;EACf,cAAc,EAAE,SAAS;EACzB,WAAW,EAAE,UAAU;;AAGzB,iBAAkB;EAChB,WAAW,EAAE,IAAI;EACjB,SAAS,EAAE,IAAI;EACf,aAAa,EAAE,IAAI",
-"sources": ["location.page.scss"],
+"sources": ["news.page.scss"],
 "names": [],
-"file": "location.page.css"
+"file": "news.page.css"
 }

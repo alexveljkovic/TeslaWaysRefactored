@@ -12,10 +12,10 @@
 
 <ion-content>
   <div class="ion-padding">
-    <img class="image-single" src="{{location.imageUrl}}" alt="">
-    <h2>{{location.name[this.config.language]}}</h2>
-    <p class="location-address">{{location.address}}, {{location.city}}</p>
-    <p class="location-content" [innerHTML]="location.description[this.config.language]"></p>
+    <img class="image-single" src="{{news.imageUrl || ''}}" alt="">
+    <h2>{{news.title[this.config.language]}}</h2>
+    <p class="location-address">{{news.date}}</p>
+    <p class="location-content" [innerHTML]="news.content[this.config.language]"></p>
   </div>
 </ion-content>
 

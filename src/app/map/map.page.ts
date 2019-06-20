@@ -49,7 +49,7 @@ export class MapPage implements OnDestroy {
 
     fenceWatcher() {
         if (this.watchFence == null) {
-            this.watchFunction()
+            this.watchFunction();
             this.watchFence = setInterval(() => {
                 this.watchFunction();
             }, 5000);
@@ -58,7 +58,7 @@ export class MapPage implements OnDestroy {
 
     watchFunction() {
         console.log(this.closestPoints[0]);
-        console.log(this.closestPoints[0].rawDist, this.closestPoints[0].radius)
+        console.log(this.closestPoints[0].rawDist, this.closestPoints[0].radius);
         if (this.closestPoints.length > 0 && this.closestPoints[0].rawDist < this.utilities.toFloat(this.closestPoints[0].radius)) {
             this.animateRipple();
             document.getElementById('dist-meter').style.color = 'forestgreen';
@@ -115,7 +115,7 @@ export class MapPage implements OnDestroy {
         this.closestPoints = this.gameService.getClosestPoints(
             this.currentLocation.latitude,
             this.currentLocation.longitude,
-            this.route.id
+            routeId
         ).map(el => {
             if (this.gameService.unlockedPoints.includes(el.id)) {
                 el.discovered = false;
@@ -130,11 +130,10 @@ export class MapPage implements OnDestroy {
         await this.platform.ready();
         console.log('INIT');
         this.route = this.gameService.getActiveRoute();
-        this.getListPoints(this.route.id);
+        await this.getListPoints(this.route.id);
         this.fenceWatcher();
         // TODO: Check connection
         await this.mapService.loadMap(this.route.center);
-        // TODO: Call geofenceService to set geofence (this.gameService.getPoints())
         await this.mapService.setPointsMarkers(this.route.id);
         this.mapTimer = setInterval(() => {
             this.getListPoints(this.route.id);
@@ -161,7 +160,7 @@ export class MapPage implements OnDestroy {
             this.alertsService.displayNotification('You need to get closer to unlock this location.');
         } else {
             if (this.gameService.unlockedPoints.includes(point.id) || this.gameService.activeQuestion == null) {
-                this.gameService.addUnlockedPoint(pointId)
+                await this.gameService.addUnlockedPoint(pointId)
                 this.gameService.setActivePoint(point);
                 this.gameService.setActiveQuestion(this.utilities.choice(point.questions));
                 this.navController.navigateForward('location');
@@ -177,7 +176,7 @@ export class MapPage implements OnDestroy {
                 await modal.present();
                 const {data} = await modal.onDidDismiss();
                 if (data && data.correct) {
-                    this.gameService.addUnlockedPoint(pointId);
+                    await this.gameService.addUnlockedPoint(pointId);
                     this.gameService.setActivePoint(this.gameService.getPointData(pointId));
                     this.navController.navigateForward('location');
                 }
