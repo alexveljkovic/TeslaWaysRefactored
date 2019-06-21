@@ -17,7 +17,7 @@
       <p class="closest-title">
           <ion-icon name="checkmark-circle-outline" class="point-status" *ngIf="!this.closestPoints[0].discovered"></ion-icon>
           <ion-icon name="lock" class="point-status" *ngIf="this.closestPoints[0].discovered"></ion-icon>
-           {{this.closestPoints[0].name.sr}}</p>
+           {{this.closestPoints[0].name[this.config.language]}}</p>
       <p class="closest-address">{{this.closestPoints[0].address}}</p>
     </div>
     <div class="distance-meter" id="dist-meter">

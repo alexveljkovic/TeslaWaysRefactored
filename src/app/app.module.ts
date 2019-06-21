@@ -24,6 +24,7 @@ import {MapService} from './services/map-service/map.service';
 import {GeofenceService} from './services/geofence-service/geofence.service';
 import {Geofence} from '@ionic-native/geofence/ngx';
 import {QuestionComponent} from './components/question/question.component';
+import {TranslationService} from './services/translation-service/translation.service';
 import { File } from '@ionic-native/file/ngx';
 
 @NgModule({
@@ -52,6 +53,7 @@ import { File } from '@ionic-native/file/ngx';
         Camera,
         File,
         QuestionComponent,
+        TranslationService,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent]

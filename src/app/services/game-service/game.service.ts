@@ -50,8 +50,8 @@ import {LoaderService} from '../loader-service/loader.service';
     providedIn: 'root'
 })
 export class GameService {
-    public news: any = {};
-    public featured: any = {};
+    public news: any = [];
+    public featured: any = [];
     public points: any = [];
     public routes: any = [];
     public activePoint: any = {};
@@ -86,21 +86,21 @@ export class GameService {
     }
 
     async loadNews() {
-        this.news = await this.newsService.getNews();
+        this.news = await this.newsService.getNews() || [];
     }
 
     async loadFeatured() {
         // TODO: Check connection
-        this.featured = await this.newsService.getFeaturedNews();
+        this.featured = await this.newsService.getFeaturedNews() || [];
     }
 
     async loadPoints() {
         // TODO: Check connection
-        this.points = await this.pointService.getPoints();
+        this.points = await this.pointService.getPoints() || [];
     }
 
     async loadRoutes() {
-        this.routes = await this.routeService.getRoutes();
+        this.routes = await this.routeService.getRoutes() || [];
     }
 
     getClosestPoints(lat, lon, routeId = null, radius = null, limit = null) {
