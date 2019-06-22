@@ -15,7 +15,7 @@ import {QuestionComponent} from '../components/question/question.component';
     styleUrls: ['./map.page.scss'],
 })
 
-export class MapPage implements OnDestroy {
+export class MapPage {
     map: GoogleMap;
     route: any = {};
     currentLocation: any = {};
@@ -87,10 +87,6 @@ export class MapPage implements OnDestroy {
                 1000
             );
         }
-    }
-
-    async ngOnDestroy() {
-        this.clearIntervals();
     }
 
     async pointToLocation(lat, lng) {

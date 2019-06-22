@@ -14,6 +14,7 @@ import {GameService} from '../game-service/game.service';
 import {GeofenceService} from '../geofence-service/geofence.service';
 import {ConfigService} from '../config-service/config.service';
 import {Events} from '@ionic/angular';
+import {ɵHttpInterceptingHandler} from '@angular/common/http';
 
 
 
@@ -78,20 +79,21 @@ export class MapService {
             }
         };
 
-        const mapCanvas = document.getElementById('map_canvas');
-        this.map = GoogleMaps.create(mapCanvas, mapOptions);
-        console.log('Map created.');
-
-        await this.map.one(GoogleMapsEvent.MAP_READY);
+        if (this.map == null) {
+            console.log('Map null. Should create.')
+            const mapCanvas = document.getElementById('map_canvas');
+            this.map = GoogleMaps.create(mapCanvas, mapOptions);
+            console.log('Map created.');
+            await this.map.one(GoogleMapsEvent.MAP_READY);
+            console.log('Map ready triggered');
+        }
 
         this.subscriptions.push(this.map.on(GoogleMapsEvent.MAP_DRAG_START).subscribe(() => {
             this.mapDrag = true;
         }));
-
         this.subscriptions.push(this.map.on(GoogleMapsEvent.MAP_DRAG_END).subscribe(() => {
             this.mapDrag = false;
         }));
-        console.log('Map ready triggered');
 
         await this.geofenceService.setGeofence(this.gameService.getPoints()[0]);
     }
@@ -121,6 +123,7 @@ export class MapService {
 
     async setPointsMarkers(routeId) {
         const points = this.gameService.getPoints({}, routeId);
+        console.log('Setting markers:');
         points.forEach(point => {
             console.log(point);
             this.setMarker(point);
@@ -143,9 +146,11 @@ export class MapService {
             marker
         });
     }
-    unsubscribeWatchers() {
+    async unsubscribeWatchers() {
         this.subscriptions.forEach(subs => {
             subs.unsubscribe();
         });
+        await this.map.remove();
+        this.map = null;
     }
 }
