@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import * as firebase from 'firebase';
 import {FIREBASE_CONFIG} from './environment';
+import {NetworkService} from './services/network-service/network.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,8 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private networkService: NetworkService
   ) {
     this.initializeApp();
   }
@@ -24,6 +26,7 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       firebase.initializeApp(FIREBASE_CONFIG);
+      this.networkService.subscribe();
     });
 
   }

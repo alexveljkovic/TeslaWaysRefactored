@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import {AlertsService} from '../alert-service/alerts.service';
 import * as firebase from 'firebase';
 import {StorageService} from '../storage-service/storage.service';
+import {NetworkService} from '../network-service/network.service';
 
 const DEVELOPMENT = false;
 
@@ -14,11 +15,11 @@ export class ApiService {
   constructor(
       private alertsService: AlertsService,
       private storageService: StorageService,
-              ) { }
+      private networkService: NetworkService) { }
 
   // GET API call call to URL
     GetData(path) {
-      const isOnline = navigator.onLine;
+      const isOnline = this.networkService.isOnline();
       if (!isOnline) {
           const res = this.storageService.getValue(path);
           if (!res) {

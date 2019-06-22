@@ -26,6 +26,8 @@ import {Geofence} from '@ionic-native/geofence/ngx';
 import {QuestionComponent} from './components/question/question.component';
 import {TranslationService} from './services/translation-service/translation.service';
 import { File } from '@ionic-native/file/ngx';
+import {NetworkService} from './services/network-service/network.service';
+import {Network} from '@ionic-native/network/ngx';
 
 @NgModule({
     declarations: [AppComponent, QuestionComponent],
@@ -54,6 +56,8 @@ import { File } from '@ionic-native/file/ngx';
         File,
         QuestionComponent,
         TranslationService,
+        NetworkService,
+        Network,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent]

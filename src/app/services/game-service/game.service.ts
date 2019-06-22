@@ -6,6 +6,7 @@ import {AlertsService} from '../alert-service/alerts.service';
 import {UtilitiesService} from '../utilities-service/utilities.service';
 import {RouteService} from '../route-service/route.service';
 import {LoaderService} from '../loader-service/loader.service';
+import {NetworkService} from '../network-service/network.service';
 
 
 /*
@@ -68,7 +69,7 @@ export class GameService {
         private alertsService: AlertsService,
         private utilityService: UtilitiesService,
         private routeService: RouteService,
-        private loaderService: LoaderService,
+        private loaderService: LoaderService
     ) {
         this.init();
         // TODO: Initialize profile
