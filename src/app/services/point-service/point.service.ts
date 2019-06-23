@@ -51,7 +51,7 @@ type: "museum"
 
 export class PointService {
   public res: any = {};
-
+  TH_DEV = false;
   constructor(
       private apiService: ApiService,
       private configService: ConfigService,
@@ -65,6 +65,13 @@ export class PointService {
           if (limit !== 0) {
               return this.res.slice(0, limit);
           } else {
+              if (this.TH_DEV) {
+                  this.res.map(el => {
+                      el.hidden = 'true';
+                      return el;
+                  });
+                  console.log(this.res);
+              }
               return this.res;
           }
 

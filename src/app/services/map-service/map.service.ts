@@ -80,7 +80,7 @@ export class MapService {
         };
 
         if (this.map == null) {
-            console.log('Map null. Should create.')
+            console.log('Map null. Should create.');
             const mapCanvas = document.getElementById('map_canvas');
             this.map = GoogleMaps.create(mapCanvas, mapOptions);
             console.log('Map created.');
@@ -123,28 +123,29 @@ export class MapService {
 
     async setPointsMarkers(routeId) {
         const points = this.gameService.getPoints({}, routeId);
-        console.log('Setting markers:');
+        console.log(points);
         points.forEach(point => {
-            console.log(point);
             this.setMarker(point);
         });
     }
     setMarker(point) {
-        const marker: Marker = this.map.addMarkerSync({
-            title: point.name[this.config.language],
-            // TODO: custom icon
-            icon: 'red',
-            animation: 'DROP',
-            position: {
+        if (point.hidden !== 'true') {
+            const marker: Marker = this.map.addMarkerSync({
+                title: point.name[this.config.language],
+                // TODO: custom icon
+                icon: 'red',
+                animation: 'DROP',
+                position: {
+                    lat: point.lat,
+                    lng: point.lon
+                }
+            });
+            this.markers.push({
                 lat: point.lat,
-                lng: point.lon
-            }
-        });
-        this.markers.push({
-            lat: point.lat,
-            lon: point.lon,
-            marker
-        });
+                lon: point.lon,
+                marker
+            });
+        }
     }
     async unsubscribeWatchers() {
         this.subscriptions.forEach(subs => {

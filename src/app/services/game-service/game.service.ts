@@ -214,6 +214,12 @@ export class GameService {
 
     async addUnlockedPoint(pointId) {
         this.unlockedPoints.push(pointId);
+        this.points.map(el => {
+            if (el.id === pointId) {
+                el.hidden = 'discovered';
+            }
+            return el;
+        });
         await this.saveState();
     }
 
