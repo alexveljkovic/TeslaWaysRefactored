@@ -6,7 +6,6 @@ import {AlertsService} from '../alert-service/alerts.service';
 import {UtilitiesService} from '../utilities-service/utilities.service';
 import {RouteService} from '../route-service/route.service';
 import {LoaderService} from '../loader-service/loader.service';
-import {NetworkService} from '../network-service/network.service';
 
 
 /*
@@ -111,8 +110,8 @@ export class GameService {
                 return true;
             }
             //this.getRoute(routeId).routePoints.includes(el.id);
-            console.log(this.getRoute(routeId));
-            console.log(el.id);
+            // console.log(this.getRoute(routeId));
+            // console.log(el.id);
             return true;
         });
 
@@ -162,7 +161,7 @@ export class GameService {
                 `${Math.round(d2)} m` : `${Math.round(d2 / 10) / 100} Km`;
             return d1 - d2;
         });
-        console.log(this.points);
+        // console.log(this.points);
         return this.points.filter(el => radius == null || this.utilityService.euclideanDistance(el.lat, el.lon, lat, lon) <= radius);
     }
 

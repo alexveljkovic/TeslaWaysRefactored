@@ -57,8 +57,8 @@ export class MapPage {
     }
 
     watchFunction() {
-        console.log(this.closestPoints[0]);
-        console.log(this.closestPoints[0].rawDist, this.closestPoints[0].radius);
+        // console.log(this.closestPoints[0]);
+        // console.log(this.closestPoints[0].rawDist, this.closestPoints[0].radius);
         if (this.closestPoints.length > 0 && this.closestPoints[0].rawDist < this.utilities.toFloat(this.closestPoints[0].radius)) {
             this.animateRipple();
             document.getElementById('dist-meter').style.color = 'forestgreen';
@@ -150,19 +150,18 @@ export class MapPage {
 
     async gotoLocation(pointId) {
         const point = this.gameService.getPointData(pointId);
-        console.log(point);
 
         if (this.discoveredPoint == null || pointId !== this.discoveredPoint.id) {
             this.alertsService.displayNotification('You need to get closer to unlock this location.');
         } else {
             if (this.gameService.unlockedPoints.includes(point.id) || this.gameService.activeQuestion == null) {
-                await this.gameService.addUnlockedPoint(pointId)
+                await this.gameService.addUnlockedPoint(pointId);
                 this.gameService.setActivePoint(point);
                 this.gameService.setActiveQuestion(this.utilities.choice(point.questions));
                 this.navController.navigateForward('location');
             } else {
                 this.clearIntervals();
-                console.log(this.gameService.activeQuestion);
+                console.log('Active question correct: ' + this.gameService.activeQuestion.sr.correctAnswer);
                 const modal = await this.modalController.create({
                     component: QuestionComponent,
                     componentProps: {
@@ -173,7 +172,8 @@ export class MapPage {
                 const {data} = await modal.onDidDismiss();
                 if (data && data.correct) {
                     await this.gameService.addUnlockedPoint(pointId);
-                    this.gameService.setActivePoint(this.gameService.getPointData(pointId));
+                    this.gameService.setActivePoint(point);
+                    this.gameService.setActiveQuestion(this.utilities.choice(point.questions));
                     this.navController.navigateForward('location');
                 }
             }

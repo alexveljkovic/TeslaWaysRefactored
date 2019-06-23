@@ -21,7 +21,7 @@ export class UtilitiesService {
     }
 
     euclideanDistance(rawLat1, rawLon1, rawLat2, rawLon2) {  // generally used geo measurement function
-        console.log(rawLat1, rawLon1, rawLat2, rawLon2);
+        // console.log(rawLat1, rawLon1, rawLat2, rawLon2);
         const lat1 = this.toFloat(rawLat1);
         const lon1 = this.toFloat(rawLon1);
         const lat2 = this.toFloat(rawLat2);
@@ -34,7 +34,7 @@ export class UtilitiesService {
             Math.sin(dLon/2) * Math.sin(dLon/2);
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
         const d = R * c;
-        console.log(d * 1000);
+        // console.log(d * 1000);
         return d * 1000; // meters
     }
 

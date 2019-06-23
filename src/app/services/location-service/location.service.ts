@@ -25,7 +25,7 @@ export class LocationService {
             const watcher = this.geolocation.watchPosition({enableHighAccuracy: true, timeout: 100000, maximumAge: 5000});
             this.subscription = watcher.subscribe((data: any) => {
                 const latlng: LatLng = new LatLng(data.coords.latitude, data.coords.longitude);
-                console.log(latlng);
+                // console.log(latlng);
             });
         } catch (e) {
             console.log(e);
@@ -45,7 +45,7 @@ export class LocationService {
         if (!DEVELOPMENT) {
             try {
                 this.data = await this.geolocation.getCurrentPosition({enableHighAccuracy: true});
-                console.log(`[location-service] lat: ${this.data.coords.latitude} lon: ${this.data.coords.longitude}`);
+                // console.log(`[location-service] lat: ${this.data.coords.latitude} lon: ${this.data.coords.longitude}`);
                 return this.data.coords;
             } catch (e) {
                 console.log(e);
